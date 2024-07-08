@@ -1,0 +1,47 @@
+//Service.jsx
+import { axiosInstance } from 'shared/base/proxy/https'
+
+export class CrmApi {
+ getSalesMarketTest = async () => {
+    const service = `/api/v1/portal/crm/sales-market`;
+    return await axiosInstance.get(service);
+  }
+  }
+  
+/////////////////////////////////////////////////////////////////////////
+
+
+//TestT.jsx
+import { CrmApi } from "portal/services/Crm";
+import React, { useEffect, useState } from "react"
+export default function TestT () {
+
+    const [marketCode, setMarketCode] = useState([]);
+
+    useEffect(() => {
+        fetchDropdownData();
+      }, []);
+
+    const fetchDropdownData = async () => {
+        debugger;
+        const api = new CrmApi();
+        try{
+        const response = await api.getSalesMarketTest();
+        console.log("response",response);
+        console.log("responseDataResult",response.data.result)
+        setMarketCode(response.data.result[3].marketCode)
+        console.log("Basarılı");
+        }catch(error){
+            console.log("Hata",error)
+        }
+    }
+
+    return (
+        <div>
+            TUĞBERK
+            <div>
+                {marketCode}
+            </div>
+        </div>
+    )
+}
